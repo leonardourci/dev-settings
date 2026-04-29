@@ -1,0 +1,28 @@
+format = "$directory$git_branch$git_status$character"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = false
+style = "cyan"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "yellow"
+truncation_length = 30
+truncation_symbol = "…"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "red"
+conflicted = "!"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+untracked = "?"
+modified = "✎"
+staged = "+"

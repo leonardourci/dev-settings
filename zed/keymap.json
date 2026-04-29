@@ -14,6 +14,11 @@
             "space": "project_panel::Open", // Open file with space
             "cmd-n": "project_panel::NewFile",
             "cmd-shift-n": "project_panel::NewDirectory", // New folder
+            "up": "menu::SelectPrevious",
+            "down": "menu::SelectNext",
+            "left": "menu::SelectParent",
+            "right": "menu::SelectChild",
+            "enter": "project_panel::Open",
         },
     },
     // Source Control / Git bindings
