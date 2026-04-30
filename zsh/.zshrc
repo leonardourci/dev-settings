@@ -32,6 +32,15 @@ bindkey '^l' _sgpt_zsh
 
 eval "$(starship init zsh)"
 
+# treat /, -, = as word boundaries for Option+F partial accept
+WORDCHARS="${WORDCHARS//[\/\-=]}"
+
+# Option+Left/Right for word navigation
+bindkey '\e[1;3C' forward-word   # Option+Right
+bindkey '\e[1;3D' backward-word  # Option+Left
+bindkey '\e\e[C'  forward-word   # Option+Right (alt sequence)
+bindkey '\e\e[D'  backward-word  # Option+Left (alt sequence)
+
 # autosuggestion accept with right arrow, falls back to cursor movement when no suggestion
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(forward-char end-of-line vi-forward-char vi-end-of-line)
 bindkey '^[[C' forward-char
