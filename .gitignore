@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# iTerm2 backup files created by install.sh
+iterm2/com.googlecode.iterm2.plist.bak.*
