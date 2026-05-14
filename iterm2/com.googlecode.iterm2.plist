@@ -28,6 +28,8 @@
 	<string>https://api.openai.com/v1/responses</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>AlwaysOpenWindowAtStartup</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>149B84AF-8C16-4C49-BB50-29256DB76E8F</string>
 	<key>Default Browser Profile Guid</key>
@@ -65,7 +67,7 @@
 	<key>HotkeyModifiers</key>
 	<integer>524288</integer>
 	<key>LeftTabBarWidth</key>
-	<real>191</real>
+	<real>266</real>
 	<key>MinimumWeightDifferenceForBoldFont</key>
 	<integer>6</integer>
 	<key>NeverBlockSystemShutdown</key>
@@ -2227,6 +2229,8 @@
 				<key>Red Component</key>
 				<real>0.19802422821521759</real>
 			</dict>
+			<key>Load Shell Integration Automatically</key>
+			<true/>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -2371,6 +2375,12 @@
 			<string>/Users/acendeo</string>
 		</dict>
 	</array>
+	<key>OpenArrangementAtStartup</key>
+	<false/>
+	<key>OpenBookmark</key>
+	<true/>
+	<key>OpenNoWindowsAtStartup</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2406,6 +2416,8 @@
 	</dict>
 	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
 	<false/>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>SeparateStatusBarsPerPane</key>
