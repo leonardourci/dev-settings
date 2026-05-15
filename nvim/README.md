@@ -23,7 +23,6 @@ lua/config/
   lazy.lua               # plugin manager bootstrap
 lua/plugins/             # one file per plugin/group
   colorscheme.lua        # tokyonight
-  treesitter.lua         # syntax / indent
   telescope.lua          # fuzzy finder
   lsp.lua                # mason + lspconfig
   cmp.lua                # autocomplete
