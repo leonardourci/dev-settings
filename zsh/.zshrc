@@ -30,7 +30,35 @@ _sgpt_zsh() {
 zle -N _sgpt_zsh
 bindkey '^l' _sgpt_zsh
 
-eval "$(starship init zsh)"
+# prompt — pure zsh, no deps (replaces starship)
+autoload -Uz vcs_info add-zsh-hook
+setopt prompt_subst
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' formats       ' %F{yellow} %b%f%c%u'
+zstyle ':vcs_info:git:*' actionformats ' %F{yellow} %b%f|%a%c%u'
+zstyle ':vcs_info:git:*' stagedstr     ' %F{red}+%f'
+zstyle ':vcs_info:git:*' unstagedstr   ' %F{red}✎%f'
+
+# untracked files + ahead/behind (no native vcs_info hook for these)
++vi-git-extras() {
+  command git rev-parse --is-inside-work-tree &>/dev/null || return
+  local -a flags
+  command git status --porcelain 2>/dev/null | grep -q '^??' && flags+='%F{red}?%f'
+  local ahead behind
+  ahead=$(command git rev-list --count @{upstream}..HEAD 2>/dev/null)
+  behind=$(command git rev-list --count HEAD..@{upstream} 2>/dev/null)
+  (( ahead  )) && flags+="%F{red}⇡${ahead}%f"
+  (( behind )) && flags+="%F{red}⇣${behind}%f"
+  hook_com[unstaged]+="${(j::)flags}"
+}
+zstyle ':vcs_info:git*+set-message:*' hooks git-extras
+
+add-zsh-hook precmd vcs_info
+
+# directory (last 4 segments, cyan) + git + prompt char (green ok / red err)
+PROMPT='%F{cyan}%(4~|…/%3~|%~)%f${vcs_info_msg_0_} %(?.%F{green}.%F{red})❯%f '
 
 # treat /, -, = as word boundaries for Option+F partial accept
 WORDCHARS="${WORDCHARS//[\/\-=]}"
