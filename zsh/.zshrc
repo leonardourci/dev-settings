@@ -1,5 +1,8 @@
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+# default node straight on PATH — skips ~500ms nvm eager-load on every shell
+export PATH="$NVM_DIR/versions/node/v24.15.0/bin:$PATH"
+# lazy nvm: only sourced when version switching is actually needed
+nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; nvm "$@"; }
 export PATH="$HOME/.local/bin:$PATH"
 
 eval "$(direnv hook zsh)"
@@ -72,3 +75,7 @@ bindkey '\e\e[D'  backward-word  # Option+Left (alt sequence)
 # autosuggestion accept with right arrow, falls back to cursor movement when no suggestion
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(forward-char end-of-line vi-forward-char vi-end-of-line)
 bindkey '^[[C' forward-char
+export AWS_PROFILE="granted-adm-leonardo-urci"
+
+# opencode
+export PATH=/Users/acendeo/.opencode/bin:$PATH
