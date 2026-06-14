@@ -8,7 +8,7 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(direnv hook zsh)"
 
 # completion
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -u
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*'
 
 # zsh plugins
@@ -78,4 +78,12 @@ bindkey '^[[C' forward-char
 export AWS_PROFILE="granted-adm-leonardo-urci"
 
 # opencode
-export PATH=/Users/acendeo/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/leonardoguimaraesurci/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
