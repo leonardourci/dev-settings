@@ -1,7 +1,12 @@
 export NVM_DIR="$HOME/.nvm"
-# default node straight on PATH — skips ~500ms nvm eager-load on every shell
-export PATH="$NVM_DIR/versions/node/v24.15.0/bin:$PATH"
-# lazy nvm: only sourced when version switching is actually needed
+# put default node on PATH without sourcing nvm.sh (~0ms vs ~500ms)
+# tracks `nvm alias default` automatically — no hardcoded version
+() {
+  local v=$(< "$NVM_DIR/alias/default") 2>/dev/null
+  [[ -d "$NVM_DIR/versions/node/$v/bin" ]] || v=$(/bin/ls "$NVM_DIR/versions/node" 2>/dev/null | sort -V | tail -1)
+  [[ -n "$v" ]] && export PATH="$NVM_DIR/versions/node/$v/bin:$PATH"
+}
+# lazy nvm: real nvm.sh sourced only on first nvm call (e.g. `nvm use`)
 nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; nvm "$@"; }
 export PATH="$HOME/.local/bin:$PATH"
 
