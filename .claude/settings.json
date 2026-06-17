@@ -1,17 +1,55 @@
 {
+  "agentPushNotifEnabled": true,
+  "effortLevel": "high",
+  "theme": "dark",
+  "remoteControlAtStartup": true,
+  "skipAutoPermissionPrompt": true,
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "caveman@caveman": true,
+    "superpowers@claude-plugins-official": true,
+    "superpowers@obra": true,
+    "github@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": { "repo": "JuliusBrussee/caveman", "source": "github" }
+    },
+    "lackeyjb": {
+      "source": { "repo": "lackeyjb/playwright-skill", "source": "github" }
+    },
+    "obra": {
+      "source": { "repo": "obra/superpowers", "source": "github" }
+    }
+  },
   "hooks": {
     "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "rtk hook claude" }
+        ]
+      },
       {
         "matcher": "[Nn]otion.*(update|create|append|delete|move|duplicate)",
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/notion-write-guard.sh\"",
+            "command": "bash \"$HOME/.claude/hooks/notion-write-guard.sh\"",
             "timeout": 10,
             "statusMessage": "Notion write guard"
           }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
+  "permissions": {
+    "defaultMode": "auto"
   }
 }
