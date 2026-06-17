@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "[Nn]otion.*(update|create|append|delete|move|duplicate)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/notion-write-guard.sh\"",
+            "timeout": 10,
+            "statusMessage": "Notion write guard"
+          }
+        ]
+      }
+    ]
+  }
+}
