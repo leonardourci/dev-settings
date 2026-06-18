@@ -59,6 +59,16 @@
             "statusMessage": "Caveman compaction"
           }
         ]
+      },
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/compact-caveman.sh\"",
+            "statusMessage": "Caveman compaction"
+          }
+        ]
       }
     ]
   },

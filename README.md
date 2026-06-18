@@ -102,10 +102,10 @@ handful of logical Conventional Commits (not one mega-commit) — keeping main-s
 reminds the agent to use the `commit` skill (split by concern, no AI attribution); on a
 `gh pr create` it reminds it to use the `create-pr` skill. No runtime deps.
 
-`hooks/compact-caveman.sh` is a `PreCompact(manual)` hook: on `/compact` it injects instructions
-to write the summary in caveman-ultra style while preserving all technical substance (hashes,
-paths, endpoints, decisions, errors verbatim, failed approaches, task state). No runtime deps.
-Scoped to manual `/compact`; add an `"auto"` matcher to also shape auto-compaction.
+`hooks/compact-caveman.sh` is a `PreCompact` hook (matchers `manual` + `auto`): on `/compact` and
+on automatic context-fill compaction it injects instructions to write the summary in caveman-ultra
+style while preserving all technical substance (hashes, paths, endpoints, decisions, errors
+verbatim, failed approaches, task state). No runtime deps.
 
 ### `settings.json` is a sanitized template
 
