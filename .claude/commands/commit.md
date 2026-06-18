@@ -1,40 +1,49 @@
 ---
-description: Generate a Conventional Commit message for staged changes
-argument-hint: [optional scope or note]
+description: Stage and split current changes into logical Conventional Commits (via subagent)
+argument-hint: [optional scope/note, or paths to limit to]
 ---
 
 # Commit
 
-Write Conventional Commit message for currently staged changes.
+Turn the current changes into a set of **logical Conventional Commits** — not one mega-commit,
+not noisy over-fragmentation. The commit work runs in a **dispatched subagent** so it doesn't
+burn main-session context.
 
-## Workflow
+## How to run this
 
-1. Run `git diff --cached` and `git status` (parallel) to see what's staged.
-2. If nothing staged → tell user, stop.
-3. Pick `type` + optional `scope` from rules below.
-4. Write subject. Write body only if "why" is non-obvious from diff.
-5. Show message to user. **Do not commit unless user confirms.**
+1. Cheap pre-check in the main session: `git status --porcelain` + `git diff --stat`.
+   If nothing to commit → tell the user, stop.
+2. **Dispatch a subagent** (general-purpose) with the task prompt below. Forward `$ARGUMENTS`
+   (scope hint or path filter) if given. Do NOT do the staging/committing inline.
+3. Relay the subagent's summary (one line per commit). Do not push.
 
-## Format
+## Subagent task prompt
 
-```
-<type>(<scope>): <subject>
+> Craft git commits for the current repo. Work only on the local working tree.
+>
+> 1. Inspect: `git status`, `git diff` (unstaged), `git diff --cached` (staged).
+>    If `$ARGUMENTS` names paths, limit scope to those.
+> 2. Group the changes into **logical commits** by concern:
+>    - separate unrelated features/fixes from each other
+>    - separate `refactor` (no behavior change) from `feat`/`fix`
+>    - separate docs/config/tooling from code
+>    - separate by package/module when the changes are independent
+>    Target a handful — often **2–5**. Use **1** commit only when the change is genuinely atomic.
+>    Don't fragment one logical change across commits; don't bundle unrelated changes together.
+> 3. For each group, in dependency order:
+>    - stage exactly that group with `git add <paths>` (use `git add -p <file>` only when a single
+>      file truly holds two unrelated concerns)
+>    - commit Conventional: `type(scope): subject` — subject ≤50 chars, imperative ("add" not
+>      "added"), no trailing period
+>    - add a body (wrapped at 72) only when the *why* isn't obvious from the diff
+>    - **commit as the user. NO `Co-Authored-By: Claude`, NO "Generated with Claude" or any AI
+>      attribution** — not in subject, body, or trailer
+>    - use `git commit -F <tmpfile>` for multi-line messages
+> 4. Never push, amend, rebase, or use `--no-verify`.
+> 5. Return a terse summary: one line per commit (`<sha7> type(scope): subject`), plus any files
+>    intentionally left unstaged and why.
 
-<body>
-
-<footer>
-```
-
-## Rules
-
-- Subject ≤ 50 chars, imperative mood ("add", not "added"/"adds"). No trailing period.
-- Body wrapped at 72 chars. Explain **why**, not **what** — diff shows what.
-- Skip body when intent obvious from subject.
-- One logical change per commit. Flag drive-by refactors mixed in.
-- No emojis. No `Co-Authored-By` unless user explicitly asks.
-- Never use `--no-verify`, `--amend`, `-i` flags unless user asks.
-
-## Types
+## Conventional types
 
 | Type | Use for |
 |------|---------|
@@ -48,35 +57,19 @@ Write Conventional Commit message for currently staged changes.
 | `chore` | Tooling, deps, housekeeping |
 | `style` | Formatting, whitespace |
 
-## Scope
+## Subject / scope rules
 
-Use directory or module name (e.g., `auth`, `api`, `ui`). Optional. Project-specific scope list may live in `.claude/commands/commit.md` at project root — prefer project version when present.
-
-## Examples
-
-```
-feat(auth): add refresh-token rotation on login
-
-Prior tokens lived 7 days with no rotation, widening blast
-radius if leaked. Rotate on every successful login.
-```
-
-```
-fix(api): handle null pagination cursor
-
-Cursor came back null on empty result sets, crashed iterator.
-```
-
-```
-refactor(ui): extract button variants into shared component
-```
+- ≤50 chars, imperative mood. No trailing period. No emojis.
+- Body wrapped at 72; explain **why**, not **what** — the diff shows what.
+- Scope = directory or module (`auth`, `api`, `ui`...). A project-local
+  `.claude/commands/commit.md` scope list wins when present.
 
 ## Anti-patterns
 
-- ❌ `update code`
-- ❌ `WIP`
-- ❌ `fix bug` (which bug?)
-- ❌ Mixing feature + refactor in one commit
-- ❌ Long narrative subject; put narrative in body
+- ❌ one commit for many unrelated changes (the thing this skill exists to prevent)
+- ❌ over-splitting one logical change into many tiny commits
+- ❌ `update code`, `WIP`, `fix bug` (which bug?)
+- ❌ mixing `feat` + `refactor` in one commit
+- ❌ AI attribution anywhere
 
 $ARGUMENTS
