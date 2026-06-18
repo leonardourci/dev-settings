@@ -38,6 +38,9 @@ cp zed/keymap.json ~/.config/zed/keymap.json
 source ~/.zshrc
 ```
 
+Machine-local / private env (e.g. `AWS_PROFILE`, work tokens) goes in `~/.zshrc.local`, which
+`.zshrc` sources if present. That file is never tracked — keep secrets out of this repo.
+
 ## Shell features
 
 | Feature | How |
@@ -85,7 +88,7 @@ Symlinked items:
 .claude/RTK.md                  → ~/.claude/RTK.md
 .claude/statusline-command.sh   → ~/.claude/statusline-command.sh
 .claude/hooks/notion-write-guard.sh  → ~/.claude/hooks/notion-write-guard.sh
-.claude/hooks/commit-split-guard.sh  → ~/.claude/hooks/commit-split-guard.sh
+.claude/hooks/git-workflow-guard.sh  → ~/.claude/hooks/git-workflow-guard.sh
 .claude/skills/create-pr/       → ~/.claude/skills/create-pr/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
@@ -94,8 +97,9 @@ Symlinked items:
 
 `/commit` (`commands/commit.md`) dispatches a **subagent** that splits the working tree into a
 handful of logical Conventional Commits (not one mega-commit) — keeping main-session context clean.
-`hooks/commit-split-guard.sh` is a non-blocking `PreToolUse(Bash)` nudge: when a `git commit` is
-about to run it injects a reminder to split by concern and omit AI attribution. No runtime deps.
+`hooks/git-workflow-guard.sh` is a non-blocking `PreToolUse(Bash)` nudge: on a `git commit` it
+reminds the agent to use the `commit` skill (split by concern, no AI attribution); on a
+`gh pr create` it reminds it to use the `create-pr` skill. No runtime deps.
 
 ### `settings.json` is a sanitized template
 
