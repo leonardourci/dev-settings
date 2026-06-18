@@ -80,13 +80,14 @@ bindkey '\e\e[D'  backward-word  # Option+Left (alt sequence)
 # autosuggestion accept with right arrow, falls back to cursor movement when no suggestion
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(forward-char end-of-line vi-forward-char vi-end-of-line)
 bindkey '^[[C' forward-char
-export AWS_PROFILE="granted-adm-leonardo-urci"
+# machine-local env (AWS_PROFILE, work tokens, etc.) — not tracked; see ~/.zshrc.local
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/leonardoguimaraesurci/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME/bin:"*) ;;
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
