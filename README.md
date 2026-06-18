@@ -90,7 +90,10 @@ Symlinked items:
 .claude/hooks/notion-write-guard.sh  → ~/.claude/hooks/notion-write-guard.sh
 .claude/hooks/git-workflow-guard.sh  → ~/.claude/hooks/git-workflow-guard.sh
 .claude/hooks/compact-caveman.sh     → ~/.claude/hooks/compact-caveman.sh
+.claude/hooks/human-readable-guard.sh → ~/.claude/hooks/human-readable-guard.sh
 .claude/skills/create-pr/       → ~/.claude/skills/create-pr/
+.claude/skills/human-readable/  → ~/.claude/skills/human-readable/
+.claude/skills/create-ticket/   → ~/.claude/skills/create-ticket/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
 
@@ -106,6 +109,12 @@ reminds the agent to use the `commit` skill (split by concern, no AI attribution
 on automatic context-fill compaction it injects instructions to write the summary in caveman-ultra
 style while preserving all technical substance (hashes, paths, endpoints, decisions, errors
 verbatim, failed approaches, task state). No runtime deps.
+
+The `human-readable` skill captures how to write commits, PR bodies, and tickets for a human reader
+(lead with what + why, plain language, no LLM-ese). It's referenced by the `commit` and `create-pr`
+skills, and by `create-ticket` (which, for now, only ensures a ticket is human-readable).
+`hooks/human-readable-guard.sh` is a `PreToolUse` nudge on Linear issue create/update that points
+the agent at that skill. No runtime deps.
 
 ### `settings.json` is a sanitized template
 
