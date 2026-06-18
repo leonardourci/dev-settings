@@ -34,6 +34,8 @@ path** (no `/Users/<name>/...`); rely on `git`, `gh`, `@me`, and `command -v`.
 - Limit scope by passing a path/scope hint as the skill's argument, so only the PR's files get committed
   (not unrelated working-tree changes).
 - The `commit` skill never pushes/amends/rebases — Step 3 owns the push.
+- The PR **body** (Step 4) is read by a human reviewer — invoke the `human-readable` skill and
+  apply it: lead with what + why, plain language, call out risks / things to verify.
 - Invariant the skill already enforces (restated so it never slips): commit as the user; **NEVER** a
   `Co-Authored-By: Claude` trailer or any "Generated with Claude Code" / AI-attribution line — not in any
   commit message, nor in the PR body written in Step 4.

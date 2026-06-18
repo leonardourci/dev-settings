@@ -47,6 +47,16 @@
             "statusMessage": "Notion write guard"
           }
         ]
+      },
+      {
+        "matcher": "Linear__(save|create)_issue",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/human-readable-guard.sh\"",
+            "statusMessage": "Human-readable guard"
+          }
+        ]
       }
     ],
     "PreCompact": [

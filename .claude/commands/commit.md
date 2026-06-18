@@ -30,6 +30,9 @@ burn main-session context.
 >    - separate by package/module when the changes are independent
 >    Target a handful — often **2–5**. Use **1** commit only when the change is genuinely atomic.
 >    Don't fragment one logical change across commits; don't bundle unrelated changes together.
+> Commit messages are read by humans — apply the `human-readable` skill: subject + body lead with
+> what changed and WHY, in plain language, no LLM throat-clearing or diff-restating.
+>
 > 3. For each group, in dependency order:
 >    - stage exactly that group with `git add <paths>` (use `git add -p <file>` only when a single
 >      file truly holds two unrelated concerns)

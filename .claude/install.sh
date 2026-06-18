@@ -21,7 +21,10 @@ ITEMS=(
   "hooks/notion-write-guard.sh"
   "hooks/git-workflow-guard.sh"
   "hooks/compact-caveman.sh"
+  "hooks/human-readable-guard.sh"
   "skills/create-pr"
+  "skills/human-readable"
+  "skills/create-ticket"
   "commands/commit.md"
 )
 
