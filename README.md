@@ -89,6 +89,7 @@ Symlinked items:
 .claude/statusline-command.sh   → ~/.claude/statusline-command.sh
 .claude/hooks/notion-write-guard.sh  → ~/.claude/hooks/notion-write-guard.sh
 .claude/hooks/git-workflow-guard.sh  → ~/.claude/hooks/git-workflow-guard.sh
+.claude/hooks/compact-caveman.sh     → ~/.claude/hooks/compact-caveman.sh
 .claude/skills/create-pr/       → ~/.claude/skills/create-pr/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
@@ -100,6 +101,11 @@ handful of logical Conventional Commits (not one mega-commit) — keeping main-s
 `hooks/git-workflow-guard.sh` is a non-blocking `PreToolUse(Bash)` nudge: on a `git commit` it
 reminds the agent to use the `commit` skill (split by concern, no AI attribution); on a
 `gh pr create` it reminds it to use the `create-pr` skill. No runtime deps.
+
+`hooks/compact-caveman.sh` is a `PreCompact(manual)` hook: on `/compact` it injects instructions
+to write the summary in caveman-ultra style while preserving all technical substance (hashes,
+paths, endpoints, decisions, errors verbatim, failed approaches, task state). No runtime deps.
+Scoped to manual `/compact`; add an `"auto"` matcher to also shape auto-compaction.
 
 ### `settings.json` is a sanitized template
 
