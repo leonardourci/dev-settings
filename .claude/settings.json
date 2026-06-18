@@ -29,7 +29,12 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "rtk hook claude" }
+          { "type": "command", "command": "rtk hook claude" },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/commit-split-guard.sh\"",
+            "statusMessage": "Commit split guard"
+          }
         ]
       },
       {
