@@ -32,8 +32,8 @@
           { "type": "command", "command": "rtk hook claude" },
           {
             "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/commit-split-guard.sh\"",
-            "statusMessage": "Commit split guard"
+            "command": "bash \"$HOME/.claude/hooks/git-workflow-guard.sh\"",
+            "statusMessage": "Git workflow guard"
           }
         ]
       },

@@ -19,7 +19,7 @@ ITEMS=(
   "RTK.md"
   "statusline-command.sh"
   "hooks/notion-write-guard.sh"
-  "hooks/commit-split-guard.sh"
+  "hooks/git-workflow-guard.sh"
   "skills/create-pr"
   "commands/commit.md"
 )
