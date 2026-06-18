@@ -1,6 +1,6 @@
 ---
 name: create-pr
-description: Open a draft PR for the current change — conventional commit with no AI attribution, optional isolated worktree off main, push, then a draft PR assigned to you with no reviewers (and a linked ticket if given). Use when asked to "open a PR", "create a draft PR", "ship this as a PR", or after finishing a change that should become a PR.
+description: Open a draft PR for the current change — logical Conventional Commits (via the `commit` skill) with no AI attribution, optional isolated worktree off main, push, then a draft PR assigned to you with no reviewers (and a linked ticket if given). Use when asked to "open a PR", "create a draft PR", "ship this as a PR", or after finishing a change that should become a PR.
 ---
 
 # Create a draft PR
@@ -26,12 +26,17 @@ path** (no `/Users/<name>/...`); rely on `git`, `gh`, `@me`, and `command -v`.
 - Branch name: prefer the Linear-style `git checkout -b <ticket-branch>` if a ticket is given
   (the ticket's `gitBranchName`), else `<user-or-scope>/<short-desc>`.
 
-## 2. Commit (conventional, NO AI attribution)
-- Stage only the intended files (`git add <paths>`), not `-A` blindly.
-- Conventional Commit subject: `type(scope): summary` (scopes per the repo's PR-title rules if any).
-- **Commit as the user. NEVER add a `Co-Authored-By: Claude` trailer or any "Generated with Claude Code"
-  / AI-attribution line** — in the commit message or the PR body.
-- Use a message file for multi-line bodies: `git commit -F <tmpfile>`.
+## 2. Commit (via the `commit` skill)
+- **Don't hand-write commits here.** Invoke the **`commit`** skill — it stages the intended changes and
+  splits them into a handful of logical Conventional Commits (a single commit when the change is atomic),
+  in a dispatched subagent, with no AI attribution. That keeps PR history reviewable and this skill's
+  context clean.
+- Limit scope by passing a path/scope hint as the skill's argument, so only the PR's files get committed
+  (not unrelated working-tree changes).
+- The `commit` skill never pushes/amends/rebases — Step 3 owns the push.
+- Invariant the skill already enforces (restated so it never slips): commit as the user; **NEVER** a
+  `Co-Authored-By: Claude` trailer or any "Generated with Claude Code" / AI-attribution line — not in any
+  commit message, nor in the PR body written in Step 4.
 
 ## 3. Push
 - `git push -u origin <branch>` (run from the worktree if you made one; or `git -C <worktree> push ...`).
