@@ -84,10 +84,18 @@ Symlinked items:
 .claude/CLAUDE.md               → ~/.claude/CLAUDE.md
 .claude/RTK.md                  → ~/.claude/RTK.md
 .claude/statusline-command.sh   → ~/.claude/statusline-command.sh
-.claude/hooks/notion-write-guard.sh → ~/.claude/hooks/notion-write-guard.sh
+.claude/hooks/notion-write-guard.sh  → ~/.claude/hooks/notion-write-guard.sh
+.claude/hooks/commit-split-guard.sh  → ~/.claude/hooks/commit-split-guard.sh
 .claude/skills/create-pr/       → ~/.claude/skills/create-pr/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
+
+### Commit flow
+
+`/commit` (`commands/commit.md`) dispatches a **subagent** that splits the working tree into a
+handful of logical Conventional Commits (not one mega-commit) — keeping main-session context clean.
+`hooks/commit-split-guard.sh` is a non-blocking `PreToolUse(Bash)` nudge: when a `git commit` is
+about to run it injects a reminder to split by concern and omit AI attribution. No runtime deps.
 
 ### `settings.json` is a sanitized template
 
