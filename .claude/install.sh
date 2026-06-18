@@ -20,6 +20,7 @@ ITEMS=(
   "statusline-command.sh"
   "hooks/notion-write-guard.sh"
   "hooks/git-workflow-guard.sh"
+  "hooks/compact-caveman.sh"
   "skills/create-pr"
   "commands/commit.md"
 )

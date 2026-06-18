@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# PreCompact(manual) hook: shape the /compact summary into caveman-ultra style while
+# preserving ALL technical substance. Non-blocking — injects additionalContext only.
+# No runtime deps (pre-escaped static JSON; newlines as \n).
+
+printf '%s' '{"hookSpecificOutput":{"hookEventName":"PreCompact","additionalContext":"COMPACTION STYLE — write the summary in caveman-ultra: drop articles (a/an/the), filler (just/really/basically/simply/actually), pleasantries, and hedging; fragments OK; short synonyms (big not extensive, fix not \"implement a solution for\"). This compresses FORM ONLY — preserve ALL technical substance, verbatim:\n- commit hashes/SHAs, branch names, PR URLs, ticket IDs\n- file paths (absolute) and file:line references\n- API endpoints, commands run (with exact flags), config values, versions, numbers\n- decisions made and WHY; open nits / TODOs / unresolved questions\n- exact error messages and quotes (verbatim — do not paraphrase)\n- approaches already TRIED and FAILED (so they are not retried)\n- user preferences/constraints stated this session\n- current task state: what is done vs in-progress vs the next step\nCode blocks, file paths, and quoted errors stay UNCHANGED — never compress inside them."}}'

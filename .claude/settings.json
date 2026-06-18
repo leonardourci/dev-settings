@@ -48,6 +48,18 @@
           }
         ]
       }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/compact-caveman.sh\"",
+            "statusMessage": "Caveman compaction"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
