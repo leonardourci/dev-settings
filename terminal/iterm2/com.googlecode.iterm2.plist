@@ -19,9 +19,9 @@
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AiMaxTokens</key>
-	<integer>400000</integer>
+	<integer>1050000</integer>
 	<key>AiModel</key>
-	<string>gpt-5.2</string>
+	<string>gpt-5.5</string>
 	<key>AiResponseMaxTokens</key>
 	<integer>128000</integer>
 	<key>AitermURL</key>
@@ -76,7 +76,7 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
-		<key>0xf702-0x380000-0x7b</key>
+		<key>0xf702-0x220000-0x7b</key>
 		<dict>
 			<key>Action</key>
 			<integer>2</integer>
@@ -89,7 +89,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0xf702-0x3a0000-0x7b</key>
+		<key>0xf702-0x260000-0x7b</key>
 		<dict>
 			<key>Action</key>
 			<integer>33</integer>
@@ -102,7 +102,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0xf703-0x380000-0x7c</key>
+		<key>0xf703-0x220000-0x7c</key>
 		<dict>
 			<key>Action</key>
 			<integer>0</integer>
@@ -115,7 +115,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0xf703-0x3a0000-0x7c</key>
+		<key>0xf703-0x260000-0x7c</key>
 		<dict>
 			<key>Action</key>
 			<integer>34</integer>
@@ -1988,13 +1988,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.97999999999999998</real>
+				<real>1</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.97999999999999998</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.97999999999999998</real>
+				<real>1</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -2216,7 +2216,7 @@
 				<real>1</real>
 			</dict>
 			<key>Cursor Type</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
@@ -2227,6 +2227,8 @@
 			<string>Default</string>
 			<key>Disable Window Resizing</key>
 			<true/>
+			<key>Faint Text Alpha (Light)</key>
+			<real>0.49604114089155282</real>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -2368,6 +2370,8 @@
 			<true/>
 			<key>Minimum Contrast (Dark)</key>
 			<real>0.0</real>
+			<key>Minimum Contrast (Light)</key>
+			<real>0.50407327586206885</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -2557,6 +2561,8 @@
 	<false/>
 	<key>Print In Black And White</key>
 	<true/>
+	<key>ReportHorizontalScrollEvents</key>
+	<false/>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>SeparateStatusBarsPerPane</key>
@@ -2595,5 +2601,9 @@
 	<string>qrsAAAGXnXBrwGxMO6s=</string>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>0</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
