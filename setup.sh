@@ -32,5 +32,6 @@ bash "$DIR/vial/install.sh"
 bash "$DIR/zed/install.sh"
 bash "$DIR/cursor/install.sh"
 bash "$DIR/vim/install.sh"
+bash "$DIR/loop/install.sh"   # imports Loop settings (app installed above via macos/apps.sh)
 
 echo "All done. Open a fresh terminal; restart/log out for key-repeat to fully apply."

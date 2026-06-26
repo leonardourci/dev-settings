@@ -16,10 +16,11 @@ if ! command -v brew >/dev/null; then
   exit 0
 fi
 
-# GUI apps from healthy Homebrew casks. Configs are symlinked separately by each component's
-# install.sh (zed/, cursor/). Raycast and Loop settings live in app prefs (plist/cloud), not
-# plain files, so they're not symlinked.
-#   caffeine = keep-awake | zed, cursor = editors | raycast = launcher | loop = window snapping
+# GUI apps from healthy Homebrew casks. Plain-file configs are symlinked by each component's
+# install.sh (zed/, cursor/). Loop's plist-based settings are versioned via loop/ (export/
+# import). Raycast settings stay machine-local (plist/cloud, can't symlink).
+#   caffeine = keep-awake | zed, cursor = editors | raycast = launcher
+#   loop = window snapping
 for cask in caffeine zed cursor raycast loop; do
   if brew list --cask "$cask" &>/dev/null; then
     echo "    ok $cask (already installed)"

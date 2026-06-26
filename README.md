@@ -29,6 +29,10 @@ cursor/           Cursor config (see cursor/README.md)
 vim/              minimal vim config (see vim/README.md)
   install.sh      symlinks vimrc into ~/.vimrc
   vimrc           → ~/.vimrc  (symlinked; system-clipboard sharing only)
+loop/             Loop window-snapper settings (see loop/README.md)
+  install.sh      defaults import → applies the snapshot
+  export.sh       defaults export → re-snapshots after you change settings
+  com.MrKai77.Loop.plist  exported settings (versioned in git, not symlinked)
 .claude/          → ~/.claude/*  (Claude Code config — symlinked, see below)
 CLAUDE.md         project rules (e.g. keep docs in sync with every change)
 ```
@@ -52,10 +56,10 @@ to re-run. Run an individual section below if you only want one part.
 ./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor, Raycast, Loop
 ```
 
-Raycast and Loop settings aren't symlinked — their config lives in app prefs (Raycast: encrypted
-SQLite; Loop: a `defaults` plist), not plain files. Use Raycast Cloud Sync for Raycast; Loop
-settings stay machine-local. Loop is a window snapper (radial menu) — hold its trigger key and
-aim; configure the trigger in Loop's settings.
+These apps keep settings in a `defaults` plist, not plain files, so they can't be symlinked.
+**Loop** settings are still versioned in git via `loop/` (`defaults export`/`import` — see
+[`loop/README.md`](loop/README.md)). **Raycast** (use its Cloud Sync) stays machine-local.
+Loop is a window snapper (radial menu); configure the trigger in Loop's settings.
 
 ### Terminal (iTerm2 + zsh)
 
@@ -94,6 +98,17 @@ See [`cursor/README.md`](cursor/README.md) (incl. the Settings-UI symlink caveat
 Minimal on purpose — just `set clipboard=unnamed` so yanks/pastes flow between vim and the
 macOS clipboard. System `vim` already has `+clipboard`; no install needed. See
 [`vim/README.md`](vim/README.md).
+
+### Loop settings
+
+```bash
+./loop/install.sh     # applies the versioned Loop settings (defaults import)
+```
+
+Loop's config is a cfprefsd plist (can't be symlinked), so it's versioned via export/import
+rather than a live link. After changing settings in Loop, run `./loop/export.sh` and commit
+the updated plist. Keep Loop's iCloud sync **off** so git stays the source of truth. See
+[`loop/README.md`](loop/README.md).
 
 ### Mousecape (cursor themes)
 
