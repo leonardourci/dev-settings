@@ -26,6 +26,9 @@ cursor/           Cursor config (see cursor/README.md)
   install.sh      symlinks settings + keybindings into Cursor's User dir
   settings.json   → …/Cursor/User/settings.json     (symlinked)
   keybindings.json → …/Cursor/User/keybindings.json (symlinked)
+vim/              minimal vim config (see vim/README.md)
+  install.sh      symlinks vimrc into ~/.vimrc
+  vimrc           → ~/.vimrc  (symlinked; system-clipboard sharing only)
 .claude/          → ~/.claude/*  (Claude Code config — symlinked, see below)
 CLAUDE.md         project rules (e.g. keep docs in sync with every change)
 ```
@@ -81,6 +84,16 @@ Symlinked (single source of truth), so edits in the repo and in Zed are the same
 
 Symlinked like Zed. Seed config starts empty — customize in Cursor and it writes back here.
 See [`cursor/README.md`](cursor/README.md) (incl. the Settings-UI symlink caveat).
+
+### Vim
+
+```bash
+./vim/install.sh      # symlinks ~/.vimrc (system-clipboard sharing)
+```
+
+Minimal on purpose — just `set clipboard=unnamed` so yanks/pastes flow between vim and the
+macOS clipboard. System `vim` already has `+clipboard`; no install needed. See
+[`vim/README.md`](vim/README.md).
 
 ### Mousecape (cursor themes)
 

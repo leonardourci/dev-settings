@@ -31,5 +31,6 @@ bash "$DIR/mousecapes/install.sh"
 bash "$DIR/vial/install.sh"
 bash "$DIR/zed/install.sh"
 bash "$DIR/cursor/install.sh"
+bash "$DIR/vim/install.sh"
 
 echo "All done. Open a fresh terminal; restart/log out for key-repeat to fully apply."

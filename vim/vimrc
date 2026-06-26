@@ -1,0 +1,4 @@
+" Minimal vim config — the one thing wanted from vim: share the macOS system clipboard.
+" 'unnamed' routes yanks/deletes/puts through the '*' register (the macOS pasteboard), so
+" text copies seamlessly between vim and other apps. System vim ships with +clipboard.
+set clipboard=unnamed
