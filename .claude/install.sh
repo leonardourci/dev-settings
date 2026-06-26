@@ -25,6 +25,7 @@ ITEMS=(
   "skills/create-pr"
   "skills/human-readable"
   "skills/create-ticket"
+  "skills/sync-tools"
   "commands/commit.md"
 )
 

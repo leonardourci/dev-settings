@@ -166,6 +166,7 @@ Symlinked items:
 .claude/skills/create-pr/       → ~/.claude/skills/create-pr/
 .claude/skills/human-readable/  → ~/.claude/skills/human-readable/
 .claude/skills/create-ticket/   → ~/.claude/skills/create-ticket/
+.claude/skills/sync-tools/      → ~/.claude/skills/sync-tools/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
 
@@ -187,6 +188,11 @@ The `human-readable` skill captures how to write commits, PR bodies, and tickets
 skills, and by `create-ticket` (which, for now, only ensures a ticket is human-readable).
 `hooks/human-readable-guard.sh` is a `PreToolUse` nudge on Linear issue create/update that points
 the agent at that skill. No runtime deps.
+
+The `sync-tools` skill (`/sync-tools`) audits a machine against this repo and reconciles drift —
+which apps/CLIs are installed, whether configs are symlinked, the iTerm pointer, and versioned
+app settings (e.g. Loop). It's **repo-derived**: it discovers what to check by reading `setup.sh`
+and the component installers, so it stays current as components are added (no hardcoded list).
 
 ### `settings.json` is a sanitized template
 
