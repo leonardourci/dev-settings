@@ -104,6 +104,12 @@
         "tree_view": true,
     },
     "agent_servers": {
+        "codex-acp": {
+            "type": "registry"
+        },
+        "cursor": {
+            "type": "registry"
+        },
         "claude-acp": {
             "type": "registry",
             "default_model": "default",
