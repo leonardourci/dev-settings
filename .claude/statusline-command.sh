@@ -5,6 +5,7 @@
 input=$(cat)
 
 model=$(echo "$input" | jq -r '.model.display_name // "Claude"')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 
 # Current directory: last 3 segments, replacing $HOME with ~
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // ""')
@@ -66,9 +67,13 @@ if [ -n "$used_pct" ]; then
   fi
   used_fmt=$(format_tokens "$used_tokens")
   total_fmt=$(format_tokens "$ctx_size")
+  model_label="$model"
+  [ -n "$effort" ] && model_label="${effort} ${model}"
   printf "\033[0;36m%s\033[0m  %s %s%% (%s/%s)" \
-    "$model" "$bar" "$pct_display" "$used_fmt" "$total_fmt"
+    "$model_label" "$bar" "$pct_display" "$used_fmt" "$total_fmt"
 else
-  printf "\033[0;36m%s\033[0m" "$model"
+  model_label="$model"
+  [ -n "$effort" ] && model_label="${effort} ${model}"
+  printf "\033[0;36m%s\033[0m" "$model_label"
 fi
 printf "\n"
