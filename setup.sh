@@ -12,7 +12,7 @@ echo "==> macOS apps (Caffeine)"
 bash "$DIR/macos/apps.sh"
 
 echo "==> terminal (zsh + iTerm2 + Homebrew deps)"
-bash "$DIR/terminal/setup.sh"
+bash "$DIR/terminal/install.sh"
 
 echo "==> Claude Code (CLI + config)"
 # Install the CLI via the native installer (CLI only, no desktop app) if absent.

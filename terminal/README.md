@@ -4,7 +4,7 @@ Terminal environment: **iTerm2** prefs + **zsh** config, versioned together for 
 
 ```
 terminal/
-  setup.sh                         one-shot installer (zsh + iTerm2)
+  install.sh                       one-shot installer (zsh + iTerm2)
   zsh/.zshrc                       → ~/.zshrc  (symlinked)
   iterm2/com.googlecode.iterm2.plist   iTerm2 prefs (auto-synced, see below)
   iterm2/install.sh                points iTerm2 at this folder
@@ -14,11 +14,11 @@ terminal/
 
 ```bash
 # Quit iTerm2 first (cmd+Q) so the iTerm step applies
-./setup.sh
+./install.sh
 source ~/.zshrc
 ```
 
-`setup.sh` does everything: installs the Homebrew deps below, **symlinks** `~/.zshrc` to
+`install.sh` does everything: installs the Homebrew deps below, **symlinks** `~/.zshrc` to
 `zsh/.zshrc` (so edits in either place are the same file; an existing real `~/.zshrc` is
 backed up to `~/.zshrc.bak.<epoch>`), and runs the iTerm2 installer. Re-runnable; if iTerm2
 is open it skips the iTerm step and tells you the one command to finish. Needs

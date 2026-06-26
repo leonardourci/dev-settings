@@ -10,7 +10,7 @@ setup.sh          global bootstrap — runs every installer below
 macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat)
 macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor, Raycast, Loop)
 terminal/         iTerm2 + zsh config (see terminal/README.md)
-  setup.sh        one-shot installer for both
+  install.sh      one-shot installer for both
   zsh/.zshrc      → ~/.zshrc  (symlinked)
   iterm2/         → iTerm2 prefs (custom-folder sync — auto-writes back here)
 mousecapes/       Mousecape app (bundled zip) + .cape cursor themes
@@ -58,7 +58,7 @@ aim; configure the trigger in Loop's settings.
 
 ```bash
 # Quit iTerm2 first (cmd+Q). setup.sh installs Homebrew deps + both configs.
-cd terminal && ./setup.sh && source ~/.zshrc
+cd terminal && ./install.sh && source ~/.zshrc
 ```
 
 Full details — shell features, fast tab completion, iTerm2 prefs sync — are in
