@@ -8,7 +8,7 @@ apps install via Homebrew casks or bundled zips, plus a few dependencies.
 ```
 setup.sh          global bootstrap — runs every installer below
 macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat)
-macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor)
+macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor, Raycast)
 terminal/         iTerm2 + zsh config (see terminal/README.md)
   setup.sh        one-shot installer for both
   zsh/.zshrc      → ~/.zshrc  (symlinked)
@@ -46,8 +46,11 @@ to re-run. Run an individual section below if you only want one part.
 
 ```bash
 ./macos/keyboard.sh   # fast key repeat; log out / restart to fully apply
-./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor
+./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor, Raycast
 ```
+
+Raycast settings aren't symlinked — its config is encrypted SQLite, not plain files. Use
+Raycast Cloud Sync (Settings → Cloud Sync) to carry settings across machines.
 
 ### Terminal (iTerm2 + zsh)
 

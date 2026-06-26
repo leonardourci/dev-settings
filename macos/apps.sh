@@ -16,8 +16,14 @@ if ! command -v brew >/dev/null; then
   exit 0
 fi
 
-# GUI apps from healthy Homebrew casks. Their configs are symlinked separately by each
-# component's install.sh (zed/, cursor/).
-brew install --cask caffeine   # keep-awake menu-bar toggle
-brew install --cask zed        # editor
-brew install --cask cursor     # AI editor (VS Code fork)
+# GUI apps from healthy Homebrew casks. Configs are symlinked separately by each component's
+# install.sh (zed/, cursor/); Raycast settings sync via Raycast Cloud, not symlinks.
+#   caffeine = keep-awake toggle | zed, cursor = editors | raycast = launcher
+for cask in caffeine zed cursor raycast; do
+  if brew list --cask "$cask" &>/dev/null; then
+    echo "    ok $cask (already installed)"
+  else
+    # --adopt: take over a pre-existing non-brew app instead of erroring out
+    brew install --cask --adopt "$cask"
+  fi
+done
