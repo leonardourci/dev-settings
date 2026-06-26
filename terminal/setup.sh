@@ -9,7 +9,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "==> dependencies (Homebrew)"
 if command -v brew >/dev/null; then
   # idempotent: brew skips anything already installed
-  brew install zsh-autosuggestions zsh-syntax-highlighting direnv nvm jq atuin
+  brew install zsh-autosuggestions zsh-syntax-highlighting direnv nvm jq atuin gh
 else
   echo "    SKIPPED: Homebrew not found. Install it (https://brew.sh), then re-run."
 fi

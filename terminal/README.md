@@ -36,6 +36,7 @@ which `.zshrc` sources if present. Never tracked — keep secrets out of this re
 - **direnv** — per-directory env vars (devenv/nix projects)
 - **nvm** — Node version manager (lazy-loaded; near-zero startup cost)
 - **atuin** — better `Ctrl+R` history search (fuzzy, shows cwd/exit/time)
+- **gh** — GitHub CLI (PRs, issues, repo ops; the main git-forge tool agents reach for)
 - prompt — pure zsh `vcs_info`, no extra dependency
 
 ### Shell features
