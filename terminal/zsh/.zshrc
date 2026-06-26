@@ -10,33 +10,50 @@ export NVM_DIR="$HOME/.nvm"
 nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; nvm "$@"; }
 export PATH="$HOME/.local/bin:$PATH"
 
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
-# completion
-autoload -Uz compinit && compinit -u
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*'
+# completion — cached dump so tab is snappy; full rebuild only ~once/day
+autoload -Uz compinit
+_zdump="$HOME/.zcompdump"
+# array-glob (NOT [[ -n …(#q…) ]], which never globs): Nmh-20 keeps the dump
+# only if it exists and was modified <20h ago.
+_zfresh=( "$_zdump"(Nmh-20) )
+if (( $#_zfresh )); then
+  compinit -C -d "$_zdump"   # dump fresh: skip security scan + rebuild (fast)
+else
+  compinit -d "$_zdump"      # stale/missing: rebuild once
+fi
+unset _zdump _zfresh
+# case-insensitive matching only — dropped fuzzy 'r:|=*' partial match (slow on big sets)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# cache expensive completions (git remotes, brew, etc.)
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.zsh/cache"
+[[ -d "$HOME/.zsh/cache" ]] || mkdir -p "$HOME/.zsh/cache"
 
 # zsh plugins
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# autosuggestions perf (set BEFORE sourcing): fetch suggestions in a background
+# process and bind widgets once at load instead of on every prompt — this is what
+# makes Tab/typing feel instant instead of laggy after the buffer changes.
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=80   # skip suggesting on very long lines
+# which widgets accept the suggestion (must be set before source under MANUAL_REBIND)
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(forward-char end-of-line vi-forward-char vi-end-of-line)
+# guarded sources: skip (no error) if the plugin isn't installed yet — keeps a fresh
+# machine usable before `brew install`. ${HOMEBREW_PREFIX} covers Intel (/usr/local) too.
+_brew_share="${HOMEBREW_PREFIX:-/opt/homebrew}/share"
+[[ -r "$_brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] \
+  && source "$_brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# syntax-highlighting must be sourced LAST (it wraps all existing widgets)
+[[ -r "$_brew_share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] \
+  && source "$_brew_share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unset _brew_share
 
-# shell-gpt / Ollama AI completions
-export SGPT_MODEL="ollama/qwen2.5-coder:1.5b"
-export OPENAI_API_KEY="ollama"
-export OPENAI_API_BASE="http://localhost:11434/v1"
-
-# Ctrl+L → AI shell suggestion via sgpt
-_sgpt_zsh() {
-  if [[ -n "$BUFFER" ]]; then
-    _sgpt_prev_cmd=$BUFFER
-    BUFFER+=" "
-    zle -R
-    BUFFER=$(sgpt --shell --no-interaction "$_sgpt_prev_cmd" 2>/dev/null)
-    zle end-of-line
-  fi
-}
-zle -N _sgpt_zsh
-bindkey '^l' _sgpt_zsh
+# atuin — better Ctrl+R history search (fuzzy, shows cwd/exit/time).
+# --disable-up-arrow keeps the normal Up arrow (previous-command) untouched.
+# Guarded so the shell still loads if atuin isn't installed yet.
+command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
 
 # prompt — pure zsh, no deps (replaces starship)
 autoload -Uz vcs_info add-zsh-hook
@@ -78,7 +95,8 @@ bindkey '\e\e[C'  forward-word   # Option+Right (alt sequence)
 bindkey '\e\e[D'  backward-word  # Option+Left (alt sequence)
 
 # autosuggestion accept with right arrow, falls back to cursor movement when no suggestion
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(forward-char end-of-line vi-forward-char vi-end-of-line)
+# (the ACCEPT_WIDGETS list itself is set before the plugin source above — required by
+# MANUAL_REBIND, which finalizes widget wrapping at source time)
 bindkey '^[[C' forward-char
 # machine-local env (AWS_PROFILE, work tokens, etc.) — not tracked; see ~/.zshrc.local
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
