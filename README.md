@@ -1,81 +1,120 @@
 # dev-settings
 
-Personal dev environment config. Copy files to their destinations and install dependencies.
+Personal dev environment config. Configs are symlinked into place (single source of truth),
+apps install via Homebrew casks or bundled zips, plus a few dependencies.
 
 ## Structure
 
 ```
-zsh/
-  .zshrc          → ~/.zshrc
-zed/
-  settings.json   → ~/.config/zed/settings.json
-  keymap.json     → ~/.config/zed/keymap.json
+setup.sh          global bootstrap — runs every installer below
+macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat)
+macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor)
+terminal/         iTerm2 + zsh config (see terminal/README.md)
+  setup.sh        one-shot installer for both
+  zsh/.zshrc      → ~/.zshrc  (symlinked)
+  iterm2/         → iTerm2 prefs (custom-folder sync — auto-writes back here)
+mousecapes/       Mousecape app (bundled zip) + .cape cursor themes
+  install.sh      installs the app, adds capes to the library
+vial/             Vial keyboard configurator (see vial/README.md)
+  install.sh      installs Vial.app from the bundled zip
+  *.vil           Sofle split-keyboard layout backup (loaded manually)
+zed/              Zed config (see zed/README.md)
+  install.sh      symlinks settings + keymap into ~/.config/zed/
+  settings.json   → ~/.config/zed/settings.json  (symlinked)
+  keymap.json     → ~/.config/zed/keymap.json    (symlinked)
+cursor/           Cursor config (see cursor/README.md)
+  install.sh      symlinks settings + keybindings into Cursor's User dir
+  settings.json   → …/Cursor/User/settings.json     (symlinked)
+  keybindings.json → …/Cursor/User/keybindings.json (symlinked)
 .claude/          → ~/.claude/*  (Claude Code config — symlinked, see below)
-SPLIT_KEYBOARD_SOFLE_VIAL.vil  → Vial app (split keyboard firmware layout)
+CLAUDE.md         project rules (e.g. keep docs in sync with every change)
 ```
 
 ## Setup
 
-### Dependencies (macOS + Homebrew)
+### Everything at once
 
 ```bash
-brew install zsh-autosuggestions zsh-syntax-highlighting direnv nvm shell-gpt
+# Quit iTerm2 first (cmd+Q). Runs macOS tweaks, terminal, Claude, and Zed installers.
+./setup.sh && source ~/.zshrc
 ```
 
-- **prompt** — pure zsh (`vcs_info`), no extra dependency
-- **zsh-autosuggestions** — ghost-text suggestions from history
-- **zsh-syntax-highlighting** — colors commands as you type
-- **direnv** — per-directory env vars (used by devenv/nix projects)
-- **nvm** — Node version manager
-- **shell-gpt** — AI shell suggestions via `Ctrl+L` (requires local Ollama)
+`setup.sh` calls each component installer in order; all steps are idempotent, so it's safe
+to re-run. Run an individual section below if you only want one part.
 
-### Install
+### macOS (key repeat + apps)
 
 ```bash
-cp zsh/.zshrc ~/.zshrc
-mkdir -p ~/.config && cp zed/settings.json ~/.config/zed/settings.json
-cp zed/keymap.json ~/.config/zed/keymap.json
-source ~/.zshrc
+./macos/keyboard.sh   # fast key repeat; log out / restart to fully apply
+./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor
 ```
 
-Machine-local / private env (e.g. `AWS_PROFILE`, work tokens) goes in `~/.zshrc.local`, which
-`.zshrc` sources if present. That file is never tracked — keep secrets out of this repo.
-
-## Shell features
-
-| Feature | How |
-|---|---|
-| Right arrow accepts suggestion | zsh-autosuggestions + `forward-char` binding |
-| Right arrow moves cursor when no suggestion | same binding falls through |
-| Case-insensitive tab completion | `zstyle matcher-list` in `.zshrc` |
-| `Ctrl+L` → AI command suggestion | shell-gpt widget, needs Ollama running locally |
-| Git branch + status in prompt | pure zsh `vcs_info` (`.zshrc`) |
-
-## Ollama (for Ctrl+L AI suggestions)
-
-Needs Ollama running locally with `qwen2.5-coder:1.5b` pulled:
+### Terminal (iTerm2 + zsh)
 
 ```bash
-brew install ollama
-ollama pull qwen2.5-coder:1.5b
-ollama serve
+# Quit iTerm2 first (cmd+Q). setup.sh installs Homebrew deps + both configs.
+cd terminal && ./setup.sh && source ~/.zshrc
 ```
 
-Without Ollama, `Ctrl+L` silently does nothing — rest of shell works fine.
+Full details — shell features, fast tab completion, iTerm2 prefs sync — are in
+[`terminal/README.md`](terminal/README.md).
+
+### Zed
+
+```bash
+./zed/install.sh      # symlinks settings + keymap into ~/.config/zed/
+```
+
+Symlinked (single source of truth), so edits in the repo and in Zed are the same file. See
+[`zed/README.md`](zed/README.md).
+
+### Cursor
+
+```bash
+./cursor/install.sh   # symlinks settings + keybindings into Cursor's User dir
+```
+
+Symlinked like Zed. Seed config starts empty — customize in Cursor and it writes back here.
+See [`cursor/README.md`](cursor/README.md) (incl. the Settings-UI symlink caveat).
+
+### Mousecape (cursor themes)
+
+```bash
+./mousecapes/install.sh
+```
+
+Installs `Mousecape.app` from the bundled zip (no Homebrew cask exists for it) and copies the
+`.cape` themes into `~/Library/Application Support/Mousecape/capes/`. It does **not** apply a
+cape — open Mousecape and Apply the one you want (or `mousecloak --apply <file>`), since that
+changes your system cursors.
+
+### Keyboard (Vial)
+
+```bash
+./vial/install.sh
+```
+
+Installs `Vial.app` from the bundled zip (the Homebrew cask is deprecated / fails Gatekeeper).
+The `.vil` is a layout **backup**, not a live config — open Vial, plug in the keyboard, and
+**File > Load** it to write the layout to the board. See [`vial/README.md`](vial/README.md).
 
 ## Claude Code config (`.claude/`)
 
-`.claude/` is the source of truth for this machine's `~/.claude` config. Unlike the
-rest of this repo (which is **copied**), `.claude/` is **symlinked** — edits in either
+`.claude/` is the source of truth for this machine's `~/.claude` config. Like `terminal/zsh`,
+`zed/`, and `cursor/`, `.claude/` is **symlinked** — edits in either
 place are the same file, so a new machine is just clone + run the installer.
 
 ### Install
 
 ```bash
+# CLI (native installer, CLI only — no desktop app); the global ./setup.sh does this for you
+curl -fsSL https://claude.ai/install.sh | bash
+# config symlinks
 bash .claude/install.sh
 ```
 
-Creates **per-item symlinks** from `~/.claude/<item>` into this repo. It deliberately does
+The global `./setup.sh` installs the CLI (only if missing) before symlinking config.
+`.claude/install.sh` creates **per-item symlinks** from `~/.claude/<item>` into this repo. It deliberately does
 **not** symlink all of `~/.claude` — that dir also holds runtime state and secrets
 (`cache/`, `history.jsonl`, `sessions/`, `projects/`, `plugins/`, `mcp-needs-auth-cache.json`)
 which must stay local and untracked. Existing real files are backed up to
