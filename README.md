@@ -8,7 +8,7 @@ apps install via Homebrew casks or bundled zips, plus a few dependencies.
 ```
 setup.sh          global bootstrap — runs every installer below
 macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat)
-macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor, Raycast)
+macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor, Raycast, Loop)
 terminal/         iTerm2 + zsh config (see terminal/README.md)
   setup.sh        one-shot installer for both
   zsh/.zshrc      → ~/.zshrc  (symlinked)
@@ -46,11 +46,13 @@ to re-run. Run an individual section below if you only want one part.
 
 ```bash
 ./macos/keyboard.sh   # fast key repeat; log out / restart to fully apply
-./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor, Raycast
+./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor, Raycast, Loop
 ```
 
-Raycast settings aren't symlinked — its config is encrypted SQLite, not plain files. Use
-Raycast Cloud Sync (Settings → Cloud Sync) to carry settings across machines.
+Raycast and Loop settings aren't symlinked — their config lives in app prefs (Raycast: encrypted
+SQLite; Loop: a `defaults` plist), not plain files. Use Raycast Cloud Sync for Raycast; Loop
+settings stay machine-local. Loop is a window snapper (radial menu) — hold its trigger key and
+aim; configure the trigger in Loop's settings.
 
 ### Terminal (iTerm2 + zsh)
 
