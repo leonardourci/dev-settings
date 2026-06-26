@@ -206,7 +206,10 @@ plugins separately.
 
 - `statusline-command.sh` needs **`jq`** (`brew install jq`). Without it the status line is blank.
 - The Notion write-guard hook has **no** runtime deps (emits pre-escaped JSON; no `python3`/`jq`).
-- The `Bash` PreToolUse hook (`rtk hook claude`) needs **`rtk`** on `PATH` — see `RTK.md`.
+- The `Bash` PreToolUse hook (`rtk hook claude`) needs **`rtk`** (Rust Token Killer) on `PATH`.
+  `./setup.sh` installs it via the official script (`rtk-ai/rtk`; the crates.io `rtk` is a
+  different package) if missing — it does **not** run `rtk init`, since this repo already ships
+  the hook + `RTK.md`. See `RTK.md`.
 
 ### Not tracked here
 

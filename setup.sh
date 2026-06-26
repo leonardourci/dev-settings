@@ -25,6 +25,15 @@ else
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 bash "$DIR/.claude/install.sh"
+# rtk (Rust Token Killer) — the binary behind the `rtk hook claude` Bash hook in
+# .claude/settings.json. Install only if missing; the crates.io 'rtk' is a DIFFERENT package,
+# so use the official installer. Do NOT run `rtk init` — this repo already ships the hook + RTK.md.
+if command -v rtk >/dev/null; then
+  echo "    ok rtk already installed"
+else
+  echo "    installing rtk (Rust Token Killer)..."
+  curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+fi
 
 # These component scripts print their own "==>" headers.
 bash "$DIR/mousecapes/install.sh"
