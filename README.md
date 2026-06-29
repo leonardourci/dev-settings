@@ -49,6 +49,13 @@ CLAUDE.md         project rules (e.g. keep docs in sync with every change)
 `setup.sh` calls each component installer in order; all steps are idempotent, so it's safe
 to re-run. Run an individual section below if you only want one part.
 
+**Fresh machine, hands-off:** `setup.sh` can't install Claude Code plugins (they need the
+`claude plugin` CLI, not a shell script). So the fastest path on a new machine is to clone
+this repo, open `claude` inside it (yolo / bypass-permissions), and say **"set up this
+machine"** — the `bootstrap-machine` skill runs `./setup.sh` for you, then installs the
+marketplaces + plugins declared in `.claude/settings.json`. Personal config only; work
+plugins are never touched.
+
 ### macOS (key repeat + apps)
 
 ```bash
@@ -167,6 +174,7 @@ Symlinked items:
 .claude/skills/human-readable/  → ~/.claude/skills/human-readable/
 .claude/skills/create-ticket/   → ~/.claude/skills/create-ticket/
 .claude/skills/sync-tools/      → ~/.claude/skills/sync-tools/
+.claude/skills/bootstrap-machine/ → ~/.claude/skills/bootstrap-machine/
 .claude/commands/commit.md      → ~/.claude/commands/commit.md
 ```
 

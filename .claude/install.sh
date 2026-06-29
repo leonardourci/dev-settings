@@ -26,6 +26,7 @@ ITEMS=(
   "skills/human-readable"
   "skills/create-ticket"
   "skills/sync-tools"
+  "skills/bootstrap-machine"
   "commands/commit.md"
 )
 
