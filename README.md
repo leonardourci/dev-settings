@@ -7,7 +7,7 @@ apps install via Homebrew casks or bundled zips, plus a few dependencies.
 
 ```
 setup.sh          global bootstrap — runs every installer below
-macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat)
+macos/keyboard.sh faster key repeat (InitialKeyRepeat/KeyRepeat) + press-and-hold off
 macos/apps.sh     GUI apps via Homebrew cask (Caffeine, Zed, Cursor, Raycast, Loop, macshot)
 terminal/         iTerm2 + zsh config (see terminal/README.md)
   install.sh      one-shot installer for both
@@ -59,7 +59,7 @@ plugins are never touched.
 ### macOS (key repeat + apps)
 
 ```bash
-./macos/keyboard.sh   # fast key repeat; log out / restart to fully apply
+./macos/keyboard.sh   # fast key repeat + disable press-and-hold accent menu; log out / restart to fully apply
 ./macos/apps.sh       # GUI cask apps: Caffeine (keep-awake), Zed, Cursor, Raycast, Loop, macshot
 ```
 
