@@ -4,8 +4,8 @@
 # (UI floors are InitialKeyRepeat 15 and KeyRepeat 2).
 set -euo pipefail
 
-defaults write -g InitialKeyRepeat -int 10   # delay before repeat kicks in (~150ms)
-defaults write -g KeyRepeat -int 1           # interval between repeats (~15ms, very fast)
+defaults write -g InitialKeyRepeat -int 8    # delay before repeat kicks in (~120ms); UI floor is 15
+defaults write -g KeyRepeat -int 1           # interval between repeats (~15ms); UI floor is 2
 
-echo "Key repeat sped up (InitialKeyRepeat=10, KeyRepeat=1)."
+echo "Key repeat sped up (InitialKeyRepeat=8, KeyRepeat=1)."
 echo "Log out and back in (or restart) for it to fully take effect."
